@@ -247,12 +247,12 @@
 </ol>
 <h2 id="模块的定义与分组">模块的定义与分组</h2>
 <p>kubeedge中的模块实现beehive中的模块定义</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//beehive/pkg/core/module.go
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Module</span> <span style="color:#66d9ef">interface</span> {
-    <span style="color:#a6e22e">Name</span>() <span style="color:#66d9ef">string</span>
-    <span style="color:#a6e22e">Group</span>() <span style="color:#66d9ef">string</span>
-    <span style="color:#a6e22e">Start</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>)
-    <span style="color:#a6e22e">Cleanup</span>()
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#09f;font-style:italic">//beehive/pkg/core/module.go
+</span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">type</span> Module <span style="color:#069;font-weight:bold">interface</span> {
+    <span style="color:#c0f">Name</span>() <span style="color:#078;font-weight:bold">string</span>
+    <span style="color:#c0f">Group</span>() <span style="color:#078;font-weight:bold">string</span>
+    <span style="color:#c0f">Start</span>(c <span style="color:#555">*</span>context.Context)
+    <span style="color:#c0f">Cleanup</span>()
 }
 </code></pre></div><p>其中功能的<code>Name</code>和<code>Group</code>方法决定了模块所属分组，前面提到的各模块分组情况如下(stub除外)：</p>
 <table>
@@ -324,29 +324,29 @@
 <h2 id="模块间通讯">模块间通讯</h2>
 <p>beehive采用golang的channel方式实现模块间通讯，未来可能有基于unix socket的松耦合通讯方式。<br>
 通讯方式包括“单播”和“组播”两种方式，即可以将消息单独发给某个模块，也可以把消息发给模块组（即前面说的<code>edged</code>、<code>hub</code>、<code>bus</code>等组）。 beehive采用context管理分组与模块间通讯，当使用channel为通讯方式时，<code>ChannelContext</code>实现了与context相关的两个接口： <code>ModuleContext</code>和<code>MessageContext</code>。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// beehive/pkg/core/context/context_channel.go
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ModuleContext</span> <span style="color:#66d9ef">interface</span> {
-    <span style="color:#a6e22e">AddModule</span>(<span style="color:#a6e22e">module</span> <span style="color:#66d9ef">string</span>)
-    <span style="color:#a6e22e">AddModuleGroup</span>(<span style="color:#a6e22e">module</span>, <span style="color:#a6e22e">group</span> <span style="color:#66d9ef">string</span>)
-    <span style="color:#a6e22e">Cleanup</span>(<span style="color:#a6e22e">module</span> <span style="color:#66d9ef">string</span>)
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#09f;font-style:italic">// beehive/pkg/core/context/context_channel.go
+</span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">type</span> ModuleContext <span style="color:#069;font-weight:bold">interface</span> {
+    <span style="color:#c0f">AddModule</span>(module <span style="color:#078;font-weight:bold">string</span>)
+    <span style="color:#c0f">AddModuleGroup</span>(module, group <span style="color:#078;font-weight:bold">string</span>)
+    <span style="color:#c0f">Cleanup</span>(module <span style="color:#078;font-weight:bold">string</span>)
 }
 </code></pre></div><p><code>ChannelContext</code>对<code>ModuleContext</code>的实现中，<code>AddModule</code>为一个模块创建默认buffer大小为1024的channel，在自己的<code>channels</code>成员中将模块名字映射到该channel，用于“单播”。<code>AddModuleGroup</code>将一个模块对应的channel添加到所属group内，也就是将<code>ChannelContext</code>的<code>typeChannels[group][module]</code>设置为模块对应channel，用于“组播”。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// beehive/pkg/core/context/context_channel.go
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">channels</span>     <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Message</span>
-<span style="color:#a6e22e">typeChannels</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Message</span>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#09f;font-style:italic">// beehive/pkg/core/context/context_channel.go
+</span><span style="color:#09f;font-style:italic"></span>channels     <span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#069;font-weight:bold">chan</span> model.Message
+typeChannels <span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#069;font-weight:bold">chan</span> model.Message
 </code></pre></div><p>​</p>
 <p><code>ChannelContext</code>在<code>MessageChannel</code>接口的实现中，实现了模块间消息的同步与异步发送，单播组播等。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// beehive/pkg/core/context/context_channel.go
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MessageContext</span> <span style="color:#66d9ef">interface</span> {
-    <span style="color:#75715e">// async mode
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Send</span>(<span style="color:#a6e22e">module</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">message</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Message</span>)
-    <span style="color:#a6e22e">Receive</span>(<span style="color:#a6e22e">module</span> <span style="color:#66d9ef">string</span>) (<span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Message</span>, <span style="color:#66d9ef">error</span>)
-    <span style="color:#75715e">// sync mode
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">SendSync</span>(<span style="color:#a6e22e">module</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">message</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Message</span>, <span style="color:#a6e22e">timeout</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) (<span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Message</span>, <span style="color:#66d9ef">error</span>)
-    <span style="color:#a6e22e">SendResp</span>(<span style="color:#a6e22e">message</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Message</span>)
-    <span style="color:#75715e">// group broadcast
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">Send2Group</span>(<span style="color:#a6e22e">moduleType</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">message</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Message</span>)
-    <span style="color:#a6e22e">Send2GroupSync</span>(<span style="color:#a6e22e">moduleType</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">message</span> <span style="color:#a6e22e">model</span>.<span style="color:#a6e22e">Message</span>, <span style="color:#a6e22e">timeout</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>) <span style="color:#66d9ef">error</span>
+<div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#09f;font-style:italic">// beehive/pkg/core/context/context_channel.go
+</span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">type</span> MessageContext <span style="color:#069;font-weight:bold">interface</span> {
+    <span style="color:#09f;font-style:italic">// async mode
+</span><span style="color:#09f;font-style:italic"></span>    <span style="color:#c0f">Send</span>(module <span style="color:#078;font-weight:bold">string</span>, message model.Message)
+    <span style="color:#c0f">Receive</span>(module <span style="color:#078;font-weight:bold">string</span>) (model.Message, <span style="color:#078;font-weight:bold">error</span>)
+    <span style="color:#09f;font-style:italic">// sync mode
+</span><span style="color:#09f;font-style:italic"></span>    <span style="color:#c0f">SendSync</span>(module <span style="color:#078;font-weight:bold">string</span>, message model.Message, timeout time.Duration) (model.Message, <span style="color:#078;font-weight:bold">error</span>)
+    <span style="color:#c0f">SendResp</span>(message model.Message)
+    <span style="color:#09f;font-style:italic">// group broadcast
+</span><span style="color:#09f;font-style:italic"></span>    <span style="color:#c0f">Send2Group</span>(moduleType <span style="color:#078;font-weight:bold">string</span>, message model.Message)
+    <span style="color:#c0f">Send2GroupSync</span>(moduleType <span style="color:#078;font-weight:bold">string</span>, message model.Message, timeout time.Duration) <span style="color:#078;font-weight:bold">error</span>
 }
 </code></pre></div>
                         </div>
@@ -745,7 +745,7 @@
                     <div class="image same-height-always">
                         <a href="https://Rachel-Shao.github.io/blog/2018/11/29/kubeedge%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97%E4%B8%80%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/">
                           
-                            <img src="/img/placeholder.png" class="img-responsive" alt="kubeedge源码分析系列一：总体架构分析">
+                            <img src="/img/blogs/989/kubeedge_arch.png" class="img-responsive" alt="kubeedge源码分析系列一：总体架构分析">
                           
                         </a>
                     </div>
