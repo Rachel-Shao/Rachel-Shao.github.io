@@ -17,7 +17,7 @@
       <pubDate>Wed, 17 Dec 2014 16:03:01 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/12/17/cf-release%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90/</guid>
-      <description>1. 制作时的cf-release结构解析 此处指的release统一为CloudFoundry官方给出的cf-release，不做修改。</description>
+      <description>1.</description>
     </item>
     
     <item>
@@ -108,6 +108,33 @@
       
       <guid>https://Rachel-Shao.github.io/blog/2014/05/07/cloud-foundry%E4%B8%ADsyslog-aggregator%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%88%86%E6%9E%90/</guid>
       <description>在Cloud Foundry中，用来收集Cloud Foundry各组件日志信息的组件，名为syslog_aggregator。 syslog_aggregator可以做到方便的收集Cloud Foundry中所有组件的日志信息，并将这些信息进行初步处理，比如说：将不同月份产生的日志，进行分类存储；另外还对同一月份内产生的日志，将其通过不同的日期进行分类。这样的话，当Cloud Foundry平台的开发者，在运营该平台时需要查看Cloud Foundry中某一个组件产生的日志时，可以方便的查找到对应日期的日志。syslog_aggregator除了可以对日志进行分组件，分月份，分日期进行存储外，还提供一些对日志进行打包或剪枝的功能，比如：syslog_aggregator会将一定期限内的日志，进行压缩，以达到节省存储空间的功能；另外syslog_aggregator还会定期对日志进行清除，比如只保存一定期限时间长度的日志，当日志超过该时限，syslog_aggregator会将其清除。</description>
+    </item>
+    
+    <item>
+      <title>Health_Manager2.0源码分析</title>
+      <link>https://Rachel-Shao.github.io/blog/2014/04/15/health-manager2-0%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</link>
+      <pubDate>Tue, 15 Apr 2014 15:14:56 +0000</pubDate>
+      
+      <guid>https://Rachel-Shao.github.io/blog/2014/04/15/health-manager2-0%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid>
+      <description>在Cloud Foundry v2版本中，Health_Manager_next已经替代v1版本中的Health_Manager。</description>
+    </item>
+    
+    <item>
+      <title>[James Bayer]Cloud Foundry和BOSH部分遭受OpenSSL漏洞影响</title>
+      <link>https://Rachel-Shao.github.io/blog/2014/04/11/james-bayercloud-foundry%E5%92%8Cbosh%E9%83%A8%E5%88%86%E9%81%AD%E5%8F%97openssl%E6%BC%8F%E6%B4%9E%E5%BD%B1%E5%93%8D/</link>
+      <pubDate>Fri, 11 Apr 2014 10:49:01 +0000</pubDate>
+      
+      <guid>https://Rachel-Shao.github.io/blog/2014/04/11/james-bayercloud-foundry%E5%92%8Cbosh%E9%83%A8%E5%88%86%E9%81%AD%E5%8F%97openssl%E6%BC%8F%E6%B4%9E%E5%BD%B1%E5%93%8D/</guid>
+      <description>James Bayer jbayer@gopivotal.</description>
+    </item>
+    
+    <item>
+      <title>Cloud_Controller_NG源码阅读记录</title>
+      <link>https://Rachel-Shao.github.io/blog/2014/04/03/ontroller-ng%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Thu, 03 Apr 2014 14:15:12 +0000</pubDate>
+      
+      <guid>https://Rachel-Shao.github.io/blog/2014/04/03/ontroller-ng%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</guid>
+      <description>Cloud_Controller_NG就是cloud controller next generation的意思。即Cloud Foundry 平台用来管理控制应用和服务的组件。</description>
     </item>
     
     <item>

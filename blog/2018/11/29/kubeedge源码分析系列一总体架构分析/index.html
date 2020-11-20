@@ -8,12 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
   <title>kubeedge源码分析系列一：总体架构分析</title>
-  <meta name="author" content="浙大SEL实验室" />
+  <meta name="author" content="丁轶群" />
   
   
   
   
-  <meta name="keywords" content="cloudnative, edgecomputing, kubeedge, Kubernetes">
+  <meta name="keywords" content="cloudnative, edgecomputing, kubeedge">
   
   
   <meta name="description" content="">
@@ -67,11 +67,10 @@
   
     
     
-    
+    <meta property="article:section" content="Kubernetes">
     <meta property="article:tag" content="cloudnative">
     <meta property="article:tag" content="edgecomputing">
     <meta property="article:tag" content="kubeedge">
-    <meta property="article:tag" content="Kubernetes">
     
     
     <meta property="article:published_time" content="2018-11-29T16:55:37Z">
@@ -204,16 +203,25 @@
 
                         
                           <p class="text-muted text-uppercase mb-small text-right">
-                            
-                            
+                             <a href="#">丁轶群</a>
+                             | 
                             2018-11-29
                           </p>
                         
 
                         <div id="post-content">
-                          <p>kubeedge是华为在KubeCon CloudNativeCon China 2018上发布的面向边缘环境容器管理平台。kubeedge能够接入云端Kubernetes集群，使得边缘端应用的管理可以跟云端应用的管理一样，采用广为熟知的Kubernetes API。 SEL实验室准备用一系列文章分析kubeedge的总体架构和各个模块的内部实现机制，本文为系列文章的第一篇，分析kubeedge的版本为1.1后的commit <code>31e562bc</code>。</p>
-<h2 id="总体架构kubeedge中的各种模块">总体架构，kubeedge中的各种模块</h2>
-<p>kubeedge由多个模块（Module，beehive微服务框架中的概念，见后描述）组成，根据不同运行模式，包括edge或site两个模式，可以向华为自己的微服务框架beehive注册运行不同的模块。 在edge模式下注册模块由<code>kubeedge/edge/cmd/app</code>包下的<code>registerModules</code>函数完成，注册的模块包括：</p>
+                          
+
+<p>kubeedge是华为在KubeCon CloudNativeCon China 2018上发布的面向边缘环境容器管理平台。kubeedge能够接入云端Kubernetes集群，使得边缘端应用的管理可以跟云端应用的管理一样，采用广为熟知的Kubernetes API。</p>
+
+<p>SEL实验室准备用一系列文章分析kubeedge的总体架构和各个模块的内部实现机制，本文为系列文章的第一篇，分析kubeedge的版本为1.1后的commit <code>31e562bc</code>。</p>
+
+<h2 id="总体架构-kubeedge中的各种模块">总体架构，kubeedge中的各种模块</h2>
+
+<p>kubeedge由多个模块（Module，beehive微服务框架中的概念，见后描述）组成，根据不同运行模式，包括edge或site两个模式，可以向华为自己的微服务框架beehive注册运行不同的模块。</p>
+
+<p>在edge模式下注册模块由<code>kubeedge/edge/cmd/app</code>包下的<code>registerModules</code>函数完成，注册的模块包括：</p>
+
 <ol>
 <li><code>devicetwin</code></li>
 <li><code>edged</code></li>
@@ -224,19 +232,25 @@
 <li><code>servicebus</code></li>
 <li><code>test</code></li>
 </ol>
+
 <blockquote>
 <p>registerModules还调用了本地数据库的<code>InitBDManager</code>函数</p>
 </blockquote>
+
 <p>而在site模式下，启动的模块包括：</p>
+
 <ol>
 <li>edged</li>
 <li>edgecontroller</li>
 <li>metamanager</li>
 </ol>
+
 <blockquote>
 <p>site模式下的<code>registerModules</code>同样也调用了本地数据库的<code>InitBDManager</code>函数</p>
 </blockquote>
+
 <p>各模块的作用在edgecore的cobra命令描述中：</p>
+
 <ol>
 <li>DeviceTwin is responsible for storing device status and syncing device status to the cloud. It also provides query interfaces for applications.</li>
 <li>Edged is an agent that runs on edge nodes and manages containerized applications and devices.</li>
@@ -245,7 +259,9 @@
 <li>MetaManager is the message processor between edged and edgehub. It is also responsible for storing/retrieving metadata to/from a lightweight database (SQLite).</li>
 <li>ServiceBus is a HTTP client to interact with HTTP servers (REST), offering HTTP client capabilities to components of cloud to reach HTTP servers running at edge.</li>
 </ol>
+
 <h2 id="模块的定义与分组">模块的定义与分组</h2>
+
 <p>kubeedge中的模块实现beehive中的模块定义</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#09f;font-style:italic">//beehive/pkg/core/module.go
 </span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">type</span> Module <span style="color:#069;font-weight:bold">interface</span> {
@@ -253,65 +269,27 @@
     <span style="color:#c0f">Group</span>() <span style="color:#078;font-weight:bold">string</span>
     <span style="color:#c0f">Start</span>(c <span style="color:#555">*</span>context.Context)
     <span style="color:#c0f">Cleanup</span>()
-}
-</code></pre></div><p>其中功能的<code>Name</code>和<code>Group</code>方法决定了模块所属分组，前面提到的各模块分组情况如下(stub除外)：</p>
-<table>
-<thead>
-<tr>
-<th>Module</th>
-<th>Name</th>
-<th>Group</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>DeviceTwin</td>
-<td>twin</td>
-<td>twin</td>
-</tr>
-<tr>
-<td>edged</td>
-<td>edged</td>
-<td>edged</td>
-</tr>
-<tr>
-<td>EdgeHub</td>
-<td>websocket</td>
-<td>hub</td>
-</tr>
-<tr>
-<td>eventbus</td>
-<td>eventbus</td>
-<td>bus</td>
-</tr>
-<tr>
-<td>edgemesh</td>
-<td>edgemesh</td>
-<td>mesh</td>
-</tr>
-<tr>
-<td>metaManager</td>
-<td>metaManager</td>
-<td>meta</td>
-</tr>
-<tr>
-<td>servicebus</td>
-<td>servicebus</td>
-<td>bus</td>
-</tr>
-<tr>
-<td>test</td>
-<td>testManager</td>
-<td>meta</td>
-</tr>
-</tbody>
-</table>
+}</code></pre></div>
+<p>其中功能的<code>Name</code>和<code>Group</code>方法决定了模块所属分组，前面提到的各模块分组情况如下(stub除外)：</p>
+
+<p><center>
+<img src="https://res.cloudinary.com/rachel725/image/upload/v1605790473/sel/43181605790418_.pic_qgbgqa.png" style="zoom:90%;" />
+</center></p>
+
 <h2 id="模块的初始化">模块的初始化</h2>
-<p>各模块的<code>Register</code>函数调用beehive的<code>Register</code>函数将模块注册到beehive中。根据配置文件中模块是否被启用（<code>modules.enabled</code>），beehive将模块加入内部的<code>modules</code> map或者<code>disabledModules</code> map中加以管理。 edgecore或edgesite在完成模块注册之后，会调用beehive的<code>Run</code>函数启动各模块（<code>StartModules</code>）并监听信号（<code>GracefulShutdown</code>）以准备好正常关闭。</p>
+
+<p>各模块的<code>Register</code>函数调用beehive的<code>Register</code>函数将模块注册到beehive中。根据配置文件中模块是否被启用（<code>modules.enabled</code>），beehive将模块加入内部的<code>modules</code> map或者<code>disabledModules</code> map中加以管理。</p>
+
+<p>edgecore或edgesite在完成模块注册之后，会调用beehive的<code>Run</code>函数启动各模块（<code>StartModules</code>）并监听信号（<code>GracefulShutdown</code>）以准备好正常关闭。</p>
+
 <h3 id="startmodules">StartModules</h3>
+
 <p><code>StartModules</code>函数创建模块间通讯机制，并启动协程调用每个模块的<code>Start</code>函数。</p>
+
 <h3 id="gracefulshutdown">GracefulShutdown</h3>
+
 <p>GracefulShutdown函数监听系统signal，当接收到如下这些signal时，调用每个模块的<code>CleanUp</code>函数</p>
+
 <ol>
 <li>syscall.SIGINT</li>
 <li>syscall.SIGHUP</li>
@@ -321,20 +299,24 @@
 <li>syscall.SIGTRAP</li>
 <li>syscall.SIGABRT</li>
 </ol>
+
 <h2 id="模块间通讯">模块间通讯</h2>
-<p>beehive采用golang的channel方式实现模块间通讯，未来可能有基于unix socket的松耦合通讯方式。<br>
-通讯方式包括“单播”和“组播”两种方式，即可以将消息单独发给某个模块，也可以把消息发给模块组（即前面说的<code>edged</code>、<code>hub</code>、<code>bus</code>等组）。 beehive采用context管理分组与模块间通讯，当使用channel为通讯方式时，<code>ChannelContext</code>实现了与context相关的两个接口： <code>ModuleContext</code>和<code>MessageContext</code>。</p>
+
+<p>beehive采用golang的channel方式实现模块间通讯，未来可能有基于unix socket的松耦合通讯方式。</p>
+
+<p>通讯方式包括“单播”和“组播”两种方式，即可以将消息单独发给某个模块，也可以把消息发给模块组（即前面说的<code>edged</code>、<code>hub</code>、<code>bus</code>等组）。</p>
+
+<p>beehive采用context管理分组与模块间通讯，当使用channel为通讯方式时，<code>ChannelContext</code>实现了与context相关的两个接口： <code>ModuleContext</code>和<code>MessageContext</code>。</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#09f;font-style:italic">// beehive/pkg/core/context/context_channel.go
 </span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">type</span> ModuleContext <span style="color:#069;font-weight:bold">interface</span> {
     <span style="color:#c0f">AddModule</span>(module <span style="color:#078;font-weight:bold">string</span>)
     <span style="color:#c0f">AddModuleGroup</span>(module, group <span style="color:#078;font-weight:bold">string</span>)
     <span style="color:#c0f">Cleanup</span>(module <span style="color:#078;font-weight:bold">string</span>)
-}
-</code></pre></div><p><code>ChannelContext</code>对<code>ModuleContext</code>的实现中，<code>AddModule</code>为一个模块创建默认buffer大小为1024的channel，在自己的<code>channels</code>成员中将模块名字映射到该channel，用于“单播”。<code>AddModuleGroup</code>将一个模块对应的channel添加到所属group内，也就是将<code>ChannelContext</code>的<code>typeChannels[group][module]</code>设置为模块对应channel，用于“组播”。</p>
+}</code></pre></div>
+<p><code>ChannelContext</code>对<code>ModuleContext</code>的实现中，<code>AddModule</code>为一个模块创建默认buffer大小为1024的channel，在自己的<code>channels</code>成员中将模块名字映射到该channel，用于“单播”。<code>AddModuleGroup</code>将一个模块对应的channel添加到所属group内，也就是将<code>ChannelContext</code>的<code>typeChannels[group][module]</code>设置为模块对应channel，用于“组播”。</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#09f;font-style:italic">// beehive/pkg/core/context/context_channel.go
 </span><span style="color:#09f;font-style:italic"></span>channels     <span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#069;font-weight:bold">chan</span> model.Message
-typeChannels <span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#069;font-weight:bold">chan</span> model.Message
-</code></pre></div><p>​</p>
+typeChannels <span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#069;font-weight:bold">map</span>[<span style="color:#078;font-weight:bold">string</span>]<span style="color:#069;font-weight:bold">chan</span> model.Message</code></pre></div>
 <p><code>ChannelContext</code>在<code>MessageChannel</code>接口的实现中，实现了模块间消息的同步与异步发送，单播组播等。</p>
 <div class="highlight"><pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#09f;font-style:italic">// beehive/pkg/core/context/context_channel.go
 </span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">type</span> MessageContext <span style="color:#069;font-weight:bold">interface</span> {
@@ -347,8 +329,7 @@ typeChannels <span style="color:#069;font-weight:bold">map</span>[<span style="c
     <span style="color:#09f;font-style:italic">// group broadcast
 </span><span style="color:#09f;font-style:italic"></span>    <span style="color:#c0f">Send2Group</span>(moduleType <span style="color:#078;font-weight:bold">string</span>, message model.Message)
     <span style="color:#c0f">Send2GroupSync</span>(moduleType <span style="color:#078;font-weight:bold">string</span>, message model.Message, timeout time.Duration) <span style="color:#078;font-weight:bold">error</span>
-}
-</code></pre></div>
+}</code></pre></div>
                         </div>
                         
                         
@@ -498,7 +479,15 @@ typeChannels <span style="color:#069;font-weight:bold">map</span>[<span style="c
             
             
             <li>
-                <a href="/categories/cloudfoundry">cloudfoundry (12)</a>
+                <a href="/categories/bosh">bosh (1)</a>
+            </li>
+            
+            <li>
+                <a href="/categories/cloud_controller_ng">cloud_controller_ng (1)</a>
+            </li>
+            
+            <li>
+                <a href="/categories/cloudfoundry">cloudfoundry (15)</a>
             </li>
             
             <li>
@@ -506,15 +495,31 @@ typeChannels <span style="color:#069;font-weight:bold">map</span>[<span style="c
             </li>
             
             <li>
-                <a href="/categories/docker">docker (12)</a>
+                <a href="/categories/docker">docker (19)</a>
             </li>
             
             <li>
-                <a href="/categories/kubernetes">kubernetes (1)</a>
+                <a href="/categories/etcd">etcd (1)</a>
+            </li>
+            
+            <li>
+                <a href="/categories/haproxy">haproxy (1)</a>
+            </li>
+            
+            <li>
+                <a href="/categories/healthmanager">healthmanager (1)</a>
+            </li>
+            
+            <li>
+                <a href="/categories/kubernetes">kubernetes (14)</a>
             </li>
             
             <li>
                 <a href="/categories/network">network (1)</a>
+            </li>
+            
+            <li>
+                <a href="/categories/service-mesh">service-mesh (4)</a>
             </li>
             
         </ul>
@@ -566,10 +571,6 @@ typeChannels <span style="color:#069;font-weight:bold">map</span>[<span style="c
             
             <li>
                 <a href="/tags/cgroups"><i class="fas fa-tags"></i> cgroups</a>
-            </li>
-            
-            <li>
-                <a href="/tags/cloud_controller_ng"><i class="fas fa-tags"></i> cloud_controller_ng</a>
             </li>
             
             <li>
@@ -758,7 +759,7 @@ typeChannels <span style="color:#069;font-weight:bold">map</span>[<span style="c
                     <div class="image same-height-always">
                         <a href="https://Rachel-Shao.github.io/blog/2018/10/11/knative-serving%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
                           
-                            <img src="/img/blogs/972/knative%20serving.png" class="img-responsive" alt="knative serving开发环境搭建">
+                            <img src="/img/portfolio-2.jpg" class="img-responsive" alt="knative serving开发环境搭建">
                           
                         </a>
                     </div>

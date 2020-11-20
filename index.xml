@@ -17,7 +17,7 @@
       <pubDate>Thu, 29 Nov 2018 16:55:37 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2018/11/29/kubeedge%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97%E4%B8%80%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84%E5%88%86%E6%9E%90/</guid>
-      <description>kubeedge是华为在KubeCon CloudNativeCon China 2018上发布的面向边缘环境容器管理平台。kubeedge能够接入云端Kubernetes集群，使得边缘端应用的管理可以跟云端应用的管理一样，采用广为熟知的Kubernetes API。 SEL实验室准备用一系列文章分析kubeedge的总体架构和各个模块的内部实现机制，本文为系列文章的第一篇，分析kubeedge的版本为1.</description>
+      <description>kubeedge是华为在KubeCon CloudNativeCon China 2018上发布的面向边缘环境容器管理平台。kubeedge能够接入云端Kubernetes集群，使得边缘端应用的管理可以跟云端应用的管理一样，采用广为熟知的Kubernetes API。</description>
     </item>
     
     <item>
@@ -44,7 +44,7 @@
       <pubDate>Fri, 27 Jul 2018 14:28:25 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2018/07/27/service-mesh%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97%E4%B8%89-istio%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8Bpilot-discovery%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/</guid>
-      <description>本文分析的istio代码版本为0.8.0，commit为0cd8d67，commit时间为2018年6月18日。</description>
+      <description>本文分析的istio代码版本为0.</description>
     </item>
     
     <item>
@@ -53,7 +53,7 @@
       <pubDate>Fri, 13 Jul 2018 14:15:16 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2018/07/13/service-mesh%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97%E4%BA%8C-istio-discovery%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/</guid>
-      <description>本文分析的istio代码版本为0.8.0，commit为0cd8d67，commit时间为2018年6月18日。</description>
+      <description>本文分析的istio代码版本为0.</description>
     </item>
     
     <item>
@@ -62,7 +62,7 @@
       <pubDate>Tue, 26 Jun 2018 14:29:18 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2018/06/26/service-mesh%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97%E4%B8%80-istio-pilot-agent%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90/</guid>
-      <description>本文分析的istio代码版本为0.8.0，commit为0cd8d67，commit时间为2018年6月18日。</description>
+      <description>本文分析的istio代码版本为0.</description>
     </item>
     
     <item>
@@ -71,7 +71,7 @@
       <pubDate>Tue, 29 May 2018 10:35:04 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2018/05/29/pouchcontainer-cri%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%AE%9E%E7%8E%B0/</guid>
-      <description>1. CRI简介 在每个Kubernetes节点的最底层都有一个程序负责具体的容器创建删除工作，Kubernetes会对其接口进行调用，从而完成容器的编排调度。我们将这一层软件称之为容器运行时（Container Runtime），大名鼎鼎的Docker就是其中的代表。 当然，容器运行时并非只有Docker一种，包括CoreOS的rkt，hyper.</description>
+      <description>1.</description>
     </item>
     
     <item>
@@ -98,7 +98,7 @@
       <pubDate>Wed, 30 Nov 2016 18:12:46 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2016/11/30/k8s%E4%BB%A3%E7%A0%81%E8%B4%A1%E7%8C%AE%E6%B5%99%E6%B1%9F%E5%A4%A7%E5%AD%A6%E6%8E%92%E5%90%8D%E7%AC%AC%E5%85%AD/</guid>
-      <description>全球企业Kubernetes开源社区代码贡献排名：浙江大学SEL实验室排名第六。请看来自Stackalytics|Kubernetes community contribution官方网站截图。  从全球企业的贡献排名来看，排名状况基本变化不大，仍然是Google独占鳌头。令人欣喜的是，浙江大学SEL实验室排名又上升了一位，代码贡献量近24万行，总排名超越CoreOS达到世界第六位。这无疑是振奋人心的事情，这意味着越来越多的年轻学术人员投入Kubernetes开源社区建设，这将近一步提高中国在容器云社区的地位。 Kubernetes是当前容器集群编排3大开源方案中社区活跃度最高的。虽然现在正值入冬，但仍然挡不住 Kubernetes掀起全球关注的热潮。Kubernetes体现了Google对海量容器集群管理的经验和精华，这让Kubernetes在容器云计算框架横行天下的年代游刃有余，已经逐步成为了容器云框架中的佼佼者。从Kubernetes开放、自由、持续发展生态圈兼容的态度能看出，Kubernetes正变得越来越自信。 下图为Kubernetes模块代码贡献分析图：  从图中可知：Kubernetes运维和生态圈组件模块代码贡献直追核心模块kubernetes，排名2-4位的模块分别是Kubernetes生态圈、操作和界面。Kubernetes使用者越来越关心容器云框架落地而非仅仅将其作为空中楼阁远观而止。 Kubernetes在国内发展已经超过了3年的时间，但是遗憾的一点，尽管我们拥有世界上最多的开发人员，但是我们常常对社区没有话语权，国内的用户的需求无法对社区上游形 成影响，导致很多本地化定制的需求无法真正的在社区版本代码得到体现。所以如何让中国的声音出现在社区，是我们所有容器云计算人需要思考的问题。更希望越来越多的国内传统IT巨头能够意识到这个问题，投身于开源的事业中。</description>
+      <description>全球企业Kubernetes开源社区代码贡献排名：浙江大学SEL实验室排名第六。请看来自Stackalytics|Kubernetes community contribution官方网站截图。</description>
     </item>
     
     <item>
@@ -134,7 +134,7 @@
       <pubDate>Sun, 09 Aug 2015 11:25:44 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2015/08/09/kubernetes-apiserver%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-api%E8%AF%B7%E6%B1%82%E7%9A%84%E8%AE%A4%E8%AF%81%E8%BF%87%E7%A8%8B/</guid>
-      <description>解决什么问题 笔者之前希望全面分析一下k8apiserver的源码，后来发现这样并不十分有效，其一没有针对性，其二由于代码本身比较复杂，涉及到的功能较多，面面俱到也不太现实。 于是我们就回到最初的需求，到底需要解决什么问题，第一个问题就是，apiserver启动的时候，使用secure模式，参数应该如何设置，相关的机制又是怎样？ 这一部分的issue很多，如果不从源码来分析的话，就只能黑盒化的去尝试各种参数搭配，费时费力，也不确定是否正确，之前就是这样，这几个issue可以供参考： https://github.</description>
+      <description>解决什么问题 笔者之前希望全面分析一下k8apiserver的源码，后来发现这样并不十分有效，其一没有针对性，其二由于代码本身比较复杂，涉及到的功能较多，面面俱到也不太现实。</description>
     </item>
     
     <item>
@@ -197,7 +197,7 @@
       <pubDate>Thu, 12 Mar 2015 20:16:14 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2015/03/12/docker%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%9Ddocker%E9%95%9C%E5%83%8F/</guid>
-      <description>1.前言 回首过去的2014年，大家可以看到Docker在全球刮起了一阵又一阵的“容器风”，工业界对Docker的探索与实践更是一波高过一波。在如今的2015年以及未来，Docker似乎并不会像其他昙花一现的技术一样，在历史的舞台上热潮褪去，反而在工业界实践与评估之后，显现了前所未有的发展潜力。</description>
+      <description>1.</description>
     </item>
     
     <item>
@@ -206,7 +206,7 @@
       <pubDate>Thu, 12 Mar 2015 20:03:21 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2015/03/12/docker%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E5%85%ABdocker-container%E7%BD%91%E7%BB%9C%E4%B8%8B/</guid>
-      <description>1.Docker Client配置容器网络模式 Docker目前支持4种网络模式，分别是bridge、host、container、none，Docker开发者可以根据自己的需求来确定最适合自己应用场景的网络模式。 从Docker Container网络创建流程图中可以看到，创建流程第一个涉及的Docker模块即为Docker Client。当然，这也十分好理解，毕竟Docker Container网络环境的创建需要由用户发起，用户根据自身对容器的需求，选择网络模式，并将其通过Docker Client传递给Docker Daemon。</description>
+      <description>1.</description>
     </item>
     
     <item>
@@ -224,7 +224,7 @@
       <pubDate>Mon, 26 Jan 2015 10:31:13 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2015/01/26/docker%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%83docker-container%E7%BD%91%E7%BB%9C-%E4%B8%8A/</guid>
-      <description>本文开始介绍docker container的网络模型。</description>
+      <description>1.</description>
     </item>
     
     <item>
@@ -260,7 +260,7 @@
       <pubDate>Mon, 05 Jan 2015 10:52:28 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2015/01/05/docker%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E5%85%ADdocker-daemon%E7%BD%91%E7%BB%9C/</guid>
-      <description>本文介绍docker daemon的网络模型。</description>
+      <description>摘要: Docker的容器特性和镜像特性已然为Docker实践者带来了诸多效益，然而Docker的网络特性却不能让用户满意。本文从Docker的网络模式入手，分析了Docker Daemon创建网络环境的详细流程，其中着重于分析Docker桥接模式的创建，为之后Docker Container创建网络环境做铺垫。</description>
     </item>
     
     <item>
@@ -269,7 +269,7 @@
       <pubDate>Fri, 02 Jan 2015 10:56:38 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2015/01/02/google-kubernetes%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E4%B9%8Bvolumes/</guid>
-      <description>摘要：</description>
+      <description>摘要：Kubernetes是Google开源的容器集群管理系统，构建于Docker之上，为容器化的应用提供资源调度、部署运行、服务发现、扩容缩容等功能。本文描述了Kubernetes中Volumes的使用情况，Volume是一个能够被容器访问的目录。</description>
     </item>
     
     <item>
@@ -296,7 +296,7 @@
       <pubDate>Fri, 19 Dec 2014 10:46:07 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/12/19/google-kubernetes%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E4%B9%8Bpod%E7%AF%87/</guid>
-      <description>摘要：Kubernetes是Google开源的容器集群管理系统，构建于Docker之上，为容器化的应用提供资源调度、部署运行、服务发现、扩容缩容等功能。CSDN联合浙江大学SEL实验室共同翻译其设计文档，本文为系列的第二篇：Pod。 在Kubernetes中，创建、调度和管理的最小部署单位是Pod，而不是容器。</description>
+      <description>摘要：Kubernetes是Google开源的容器集群管理系统，构建于Docker之上，为容器化的应用提供资源调度、部署运行、服务发现、扩容缩容等功能。CSDN联合浙江大学SEL实验室共同翻译其设计文档，本文为系列的第二篇：Pod。</description>
     </item>
     
     <item>
@@ -305,7 +305,7 @@
       <pubDate>Wed, 17 Dec 2014 16:03:01 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/12/17/cf-release%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90/</guid>
-      <description>1. 制作时的cf-release结构解析 此处指的release统一为CloudFoundry官方给出的cf-release，不做修改。</description>
+      <description>1.</description>
     </item>
     
     <item>
@@ -332,7 +332,7 @@
       <pubDate>Tue, 09 Dec 2014 13:00:37 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/12/09/docker%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%BA%94docker-server%E7%9A%84%E5%88%9B%E5%BB%BA/</guid>
-      <description>本文为《Docker源码分析》系列的第五篇——Docker Server的创建。</description>
+      <description>1.</description>
     </item>
     
     <item>
@@ -386,7 +386,7 @@
       <pubDate>Tue, 02 Dec 2014 13:03:12 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/12/02/docker%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E5%9B%9Bdocker-daemon%E4%B9%8Bnewdaemon%E5%AE%9E%E7%8E%B0/</guid>
-      <description>本文为《Docker源码分析》第四篇——Docker Daemon之NewDaemon实现，力求帮助广大Docker爱好者更多得理解Docker 的核心——Docker Daemon的实现。</description>
+      <description>1.</description>
     </item>
     
     <item>
@@ -395,7 +395,7 @@
       <pubDate>Tue, 02 Dec 2014 13:02:44 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/12/02/docker%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%89docker-daemon%E5%90%AF%E5%8A%A8/</guid>
-      <description>本文从源码出发，介绍了Docker Daemon的启动流程，并深入分析启动流程中每一步骤的实现细节。Docker的运行真可谓，载体为daemon，调度管理由engine，任务执行靠job。</description>
+      <description>【摘要】 【Docker源码分析（三）：Docker Daemon启动】Docker作为业界备受推崇的轻量级虚拟化容器管理引擎，其强大的后台能力全凭Docker Daemon。本文从源码出发，介绍了Docker Daemon的启动流程，并深入分析启动流程中每一步骤的实现细节。Docker的运行真可谓，载体为daemon，调度管理由engine，任务执行靠job。</description>
     </item>
     
     <item>
@@ -404,7 +404,7 @@
       <pubDate>Tue, 02 Dec 2014 13:01:39 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/12/02/docker%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%BA%8Cdocker-client%E5%88%9B%E5%BB%BA%E4%B8%8E%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/</guid>
-      <description>1. 前言 如今，Docker作为业界领先的轻量级虚拟化容器管理引擎，给全球开发者提供了一种新颖、便捷的软件集成测试与部署之道。在团队开发软件时，Docker可以提供可复用的运行环境、灵活的资源配置、便捷的集成测试方法以及一键式的部署方式。可以说，Docker的优势在简化持续集成、运维部署方面体现得淋漓尽致，它完全让开发者从前者中解放出来，把精力真正地倾注在开发上。 然而，把Docker的功能发挥到极致，并非一件易事。</description>
+      <description>1.</description>
     </item>
     
     <item>
@@ -413,7 +413,7 @@
       <pubDate>Tue, 02 Dec 2014 10:19:09 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/12/02/docker%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B8%80docker%E6%9E%B6%E6%9E%84/</guid>
-      <description>本文对docker的整体架构进行介绍。</description>
+      <description>1 背景 1.</description>
     </item>
     
     <item>
@@ -476,7 +476,7 @@
       <pubDate>Tue, 15 Apr 2014 15:14:56 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/04/15/health-manager2-0%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</guid>
-      <description>在Cloud Foundry v2版本中，Health_Manager_next已经替代v1版本中的Health_Manager。 笔者写这篇文档之前，在Github上，Health_Manager_next作为一个单独的项目，存在于Cloud Foundry之下；然而在笔者写这篇文档的时候，Health_Manager_next项目在Cloud Foundry下已经不复存在，然而进入原先的Health_Manager项目，可以发现，Health_Manager项目的项目说明已经成为HealthManager 2.</description>
+      <description>在Cloud Foundry v2版本中，Health_Manager_next已经替代v1版本中的Health_Manager。</description>
     </item>
     
     <item>
@@ -494,7 +494,7 @@
       <pubDate>Thu, 03 Apr 2014 14:15:12 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/04/03/ontroller-ng%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95/</guid>
-      <description>Cloud_Controller_NG就是cloud controller next generation的意思。即Cloud Foundry 平台用来管理控制应用和服务的组件。 官方文档是这么解释CCNG的作用的： * 维护一个包含应用、服务、配置信息的数据库(CCDB)。 * 在blobstore中存储应用的packages和droplets。 * 通过NATS和其他组件进行通信，包括Droplet Execution Agents (DEAs)、Service Gateways、和 Health Manager（HM）。 * 其他供用户调用的后端API。 阅读该组件源码，有助于从应用管理的视角理解cloudfoundry的运行过程。 说明： 1.</description>
+      <description>Cloud_Controller_NG就是cloud controller next generation的意思。即Cloud Foundry 平台用来管理控制应用和服务的组件。</description>
     </item>
     
     <item>
