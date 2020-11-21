@@ -16,7 +16,7 @@
   <meta name="keywords" content="istio, Kubernetes, micro service, service mesh">
   
   
-  <meta name="description" content="">
+  <meta name="description" content="service mesh社区的健康发展离不开控制面和数据面之间的标准化接口，从而使得无论是控制面的开发团队还是数据面的开发团队都可以集中精力依照统一标准开发。对此，istio社区中提出了xds这种data plane api，并号召开源社区的广泛参与和采用。本文着重分析istio项目中的xds主要存在形式，包括cds和eds">
 
   <meta name="generator" content="Hugo 0.74.2" />
 
@@ -83,7 +83,7 @@
   
   <meta name="twitter:title" content="Service Mesh深度学习系列（三）| xds协议解密">
   
-  <meta name="twitter:description" content="">
+  <meta name="twitter:description" content="service mesh社区的健康发展离不开控制面和数据面之间的标准化接口，从而使得无论是控制面的开发团队还是数据面的开发团队都可以集中精力依照统一标准开发。对此，istio社区中提出了xds这种data plane api，并号召开源社区的广泛参与和采用。本文着重分析istio项目中的xds主要存在形式，包括cds和eds">
   
 
 </head>
@@ -214,6 +214,8 @@
                           
 
 <p>本文分析的istio代码版本为0.8.0，commit为0cd8d67，commit时间为2018年6月18日。</p>
+
+<hr />
 
 <h2 id="pilot总体架构">pilot总体架构</h2>
 
@@ -488,14 +490,28 @@
                         
                         
                         
-                        <div id="SOHUCS"></div>
-                        <script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
+                        
+
+                        
+                        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+                        <script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script> 
+                        <script type="text/javascript" src="/assets/js/md5.min.js"></script>
+                        <div id="gitalk-container"></div>     
                         <script type="text/javascript">
-                          window.changyan.api.config({
-                          appid: 'cyuX8hDAj',
-                          conf: 'prod_4e1f40d37469ca7d81688963c063f0f7'
-                          });
-                        </script>
+                            var gitalk = new Gitalk({
+                              clientID: '835183d2dcbd1167ac28', 
+                            
+                              clientSecret: 'd873919fac3cc76921ee0800172c2279bc612f8d', 
+                            
+                              repo: 'Sel-Website-talk',
+                              owner: 'Peeknut',
+                              admin: ['Peeknut'],
+                              id: location.href.split("/").pop().substring(0, 49),      
+                              distractionFreeMode: false  
+                            })
+                            gitalk.render('gitalk-container')
+                        </script> 
+                        
 
                     </div>
                     
@@ -541,11 +557,13 @@
                     }
             
             function search() {
+                    
                       key = document.getElementById("search-key").value;
                       if (key === "") {
                         
                         return;
                       }
+                      key = key.toLowerCase();
                       document.getElementById("search-key").value = "";
                   
                       
@@ -554,6 +572,9 @@
                   
                       
                       var el = document.getElementById('blog-listing-medium');
+                      if (el == null) {
+                        el = document.getElementById("blog-post")
+                      }
                       var childs = el.childNodes;
                       for (var i = childs.length - 1; i >= 0; i--) {
                         el.removeChild(childs[i]);
@@ -564,18 +585,21 @@
                       xmltext.open("GET", "/index.xml", false);
                       xmltext.send();
                       resp = xmltext.responseXML;
+                      
                       items = resp.getElementsByTagName("item");
                       
                       var i = 0;
                       haveResult = false;
                       while (i < items.length) {
                         txt = items[i].getElementsByTagName("title")[0].innerHTML + items[i].getElementsByTagName("description")[0].innerHTML
+                        txt = txt.toLowerCase();
                         if (txt.indexOf(key) > -1) {
                           haveResult = true;
                           title = items[i].getElementsByTagName("title")[0].innerHTML;
                           link = items[i].getElementsByTagName("link")[0].innerHTML;
                           time = items[i].getElementsByTagName("pubDate")[0].innerHTML;
                           mark = items[i].getElementsByTagName("description")[0].innerHTML;
+                          time = time.slice(0, -5);
                           addItem(title, link, time, mark)
                         }
                         i++;
@@ -584,6 +608,10 @@
                         document.getElementById("search-tip").innerText = "搜索完毕，未发现结果 ...";
                         document.getElementById("search-tip").style.display = "block";
                       }
+
+                      
+                      var el = document.getElementById("blog-head");
+                      el.innerHTML="Blogs"
                     }
                   
                     
@@ -605,8 +633,46 @@
                         "</article>"
                       div = document.createElement("div")
                       div.innerHTML = tmpl;
-                      document.getElementById('blog-listing-medium').appendChild(div)
+                      var el = document.getElementById('blog-listing-medium');
+                      if (el == null) {
+                        el = document.getElementById("blog-post")
+                      }
+                      el.appendChild(div)
                     }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
         </script>
         
@@ -911,7 +977,7 @@
                     <div class="image same-height-always">
                         <a href="https://Rachel-Shao.github.io/blog/2018/10/11/knative-serving%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
                           
-                            <img src="/img/portfolio-2.jpg" class="img-responsive" alt="knative serving开发环境搭建">
+                            <img src="/img/blogs/972/knative%20serving.png" class="img-responsive" alt="knative serving开发环境搭建">
                           
                         </a>
                     </div>

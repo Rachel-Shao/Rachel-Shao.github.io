@@ -194,7 +194,7 @@
                                   <div class="image">
                                       <a href="https://Rachel-Shao.github.io/blog/2015/06/23/tutum-agent%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90/">
                                           
-                                          <img src="/img/portfolio-2.jpg" class="img-responsive" alt="">
+                                          <img src="/img/blogs/583/tutum.jpg" class="img-responsive" alt="">
                                           
                                       </a>
                                   </div>
@@ -219,7 +219,8 @@
                                         </p>
                                         
                                     </div>
-                                    <p class="intro">tutum-aget是tutum提供的一个开源代理引擎。当你把tutum-agent安装在你本地机器上以后，你就可以把本地的机器节点添加到云端，让tutum来帮你统一进行管理。你随时随地都可以登陆tutum网站获得如下功能。</p>
+                                    
+                                    <p class="intro">tutum-aget是tutum提供的一个开源代理引擎。当你把tutum-agent安装在你本地机器上以后，你就可以把本地的机器节点添加到云端，让tutum来帮你统一进行管理。你随时随地都可以登陆tutum网站获得如下功能。1.启停Docker容器。2.动态伸缩容器实例数量。3.监控容器状态、容器CPU/Memory/Disk/Bandwidth使用量。4.查看容器日志、操作记录。5.与tutum其他服务结合的衍生功能（部署应用、绑定服务等）。</p>
                                     <p class="read-more"><a href="https://Rachel-Shao.github.io/blog/2015/06/23/tutum-agent%E5%8E%9F%E7%90%86%E6%B5%85%E6%9E%90/" class="btn btn-template-main">继续阅读</a>
                                         
                                     </p>
@@ -283,11 +284,13 @@
                     }
             
             function search() {
+                    
                       key = document.getElementById("search-key").value;
                       if (key === "") {
                         
                         return;
                       }
+                      key = key.toLowerCase();
                       document.getElementById("search-key").value = "";
                   
                       
@@ -296,6 +299,9 @@
                   
                       
                       var el = document.getElementById('blog-listing-medium');
+                      if (el == null) {
+                        el = document.getElementById("blog-post")
+                      }
                       var childs = el.childNodes;
                       for (var i = childs.length - 1; i >= 0; i--) {
                         el.removeChild(childs[i]);
@@ -306,18 +312,21 @@
                       xmltext.open("GET", "/index.xml", false);
                       xmltext.send();
                       resp = xmltext.responseXML;
+                      
                       items = resp.getElementsByTagName("item");
                       
                       var i = 0;
                       haveResult = false;
                       while (i < items.length) {
                         txt = items[i].getElementsByTagName("title")[0].innerHTML + items[i].getElementsByTagName("description")[0].innerHTML
+                        txt = txt.toLowerCase();
                         if (txt.indexOf(key) > -1) {
                           haveResult = true;
                           title = items[i].getElementsByTagName("title")[0].innerHTML;
                           link = items[i].getElementsByTagName("link")[0].innerHTML;
                           time = items[i].getElementsByTagName("pubDate")[0].innerHTML;
                           mark = items[i].getElementsByTagName("description")[0].innerHTML;
+                          time = time.slice(0, -5);
                           addItem(title, link, time, mark)
                         }
                         i++;
@@ -326,6 +335,10 @@
                         document.getElementById("search-tip").innerText = "搜索完毕，未发现结果 ...";
                         document.getElementById("search-tip").style.display = "block";
                       }
+
+                      
+                      var el = document.getElementById("blog-head");
+                      el.innerHTML="Blogs"
                     }
                   
                     
@@ -347,8 +360,46 @@
                         "</article>"
                       div = document.createElement("div")
                       div.innerHTML = tmpl;
-                      document.getElementById('blog-listing-medium').appendChild(div)
+                      var el = document.getElementById('blog-listing-medium');
+                      if (el == null) {
+                        el = document.getElementById("blog-post")
+                      }
+                      el.appendChild(div)
                     }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
         </script>
         
@@ -652,7 +703,7 @@
                     <div class="image same-height-always">
                         <a href="https://Rachel-Shao.github.io/blog/2018/10/11/knative-serving%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
                           
-                            <img src="/img/portfolio-2.jpg" class="img-responsive" alt="knative serving开发环境搭建">
+                            <img src="/img/blogs/972/knative%20serving.png" class="img-responsive" alt="knative serving开发环境搭建">
                           
                         </a>
                     </div>

@@ -66,7 +66,7 @@
     </item>
     
     <item>
-      <title>详解k8s中的&#39;4S&#39;: Services Account, Secret, Security Context and Security in Kubernetes</title>
+      <title>4S: Services Account, Secret, Security Context and Security in Kubernetes</title>
       <link>https://Rachel-Shao.github.io/blog/2015/07/30/4s-services-account-secret-security-context-and-security-in-kubernetes/</link>
       <pubDate>Thu, 30 Jul 2015 13:41:07 +0000</pubDate>
       
@@ -116,7 +116,7 @@
       <pubDate>Tue, 23 Dec 2014 10:20:47 +0000</pubDate>
       
       <guid>https://Rachel-Shao.github.io/blog/2014/12/23/google-kubernetes%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%E4%B9%8B%E6%9C%8D%E5%8A%A1%E7%AF%87/</guid>
-      <description>摘要：</description>
+      <description>摘要： Kubernetes是Google开源的容器集群管理系统，构建于Docker之上，为容器化的应用提供资源调度、部署运行、服务发现、扩容缩容等功能。 Pod是创建、调度和管理的最小部署单位，本文详细介绍这些Pod之间的通信和调度。</description>
     </item>
     
     <item>
