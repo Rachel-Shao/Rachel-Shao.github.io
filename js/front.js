@@ -8,7 +8,7 @@ if ($.cookie('themeLayout')) {
   $('body').addClass($.cookie('themeLayout'))
 }
 
-$(function () {
+$(document).ready(function() {
   sliderHomepage()
   sliders()
   fullScreenContainer()
